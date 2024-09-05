@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { userRouters } from "./src/routes/user_routes.js";
+import { toolsRouter } from "./src/routes/tools_routes.js";
 
 const app = express();
 
@@ -25,8 +26,9 @@ app.use(cookieParser());
 
 // app.set('views', path.join(__dirname, '../views'))
 app.set('view engine', 'ejs');
-app.use(express.static(path.join('public')))
+app.use(express.static('public'))
 
 app.use('/api/v1', userRouters)
+app.use('/api/v1/tools', toolsRouter)
 
 export { app };

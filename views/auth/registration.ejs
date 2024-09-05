@@ -6,34 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Login & Registration Form</title>
-  <link rel="stylesheet" href="/static/css/registartion.css">
+  <link rel="stylesheet" href="/css/registartion.css">
 </head>
 <body>
   <div class="container">
     <div class="registration form">
       <header>Signup</header>
       <form id="registrationForm" action="#" method='POST'>
-        {% csrf_token %}
+        <!-- {% csrf_token %} -->
         <input type="text" id="regEmail" placeholder="Enter your email" name='regEmail' required>
         <input type="password" id="regPassword" placeholder="Create a password" name='regPassword' required>
         <input type="password" id="regConfirmPassword" placeholder="Confirm your password"  name='regConfirmPassword' required>
         <span id="passwordMatch" class="error-message" style="display: none;">Passwords don't match</span>
-        {% if messages %}
+        <!-- {% if messages %}
             {% for message in messages %}
                 <span>{{ message }}</span>
             {% endfor %}
-        {% endif %}
+        {% endif %} -->
         <input type="submit" class="button" value="Signup">
       </form>
       <div class="signup">
         <span class="signup">Already have an account?
-          <a style=None href='/login'> <label>Login</label></a>
+          <a  href='/api/v1/login'> <label>Login</label></a>
         </span>
       </div>
     </div>
   </div>
 
-  {% comment %} <script>
+  <!-- {% comment %}  -->
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
       var regPassword = document.getElementById('regPassword');
       var regConfirmPassword = document.getElementById('regConfirmPassword');
@@ -57,6 +58,7 @@
         passwordMatch.style.display = 'none';
       });
     });
-  </script> {% endcomment %}
+  </script> 
+  <!-- {% endcomment %} -->
 </body>
 </html>
