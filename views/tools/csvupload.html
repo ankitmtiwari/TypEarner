@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='container'>
+    <div class="form-group">
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="csvFile" class="form-label">Upload CSV</label>
+                <input class="form-control" type="file" id="csvFile" name="csv_file" accept=".csv">
+                <div id="fileError" class="text-danger mt-1"></div>
+            </div>
+            <div class="col-auto card-text align-self-center">
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+            </div>
+            {% for n in data %}
+            <span class=''> {{ n.error}}</span>
+            {% endfor %}
+        </form>
+    </div>
+</div>  
+
+<script>
+document.getElementById('csvFile').addEventListener('change', function() {
+    var file = this.files[0];
+    var fileError = document.getElementById('fileError');
+
+    if (file && file.name.toLowerCase().endsWith('.csv')) {
+        fileError.textContent = ''; // No error, CSV file selected
+    } else {
+        fileError.textContent = 'Please select a valid CSV file.';
+    }
+});
+</script>
+{% endblock content %}

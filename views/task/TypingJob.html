@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block  content%}
+
+<style>
+  .transcription-area {
+    margin-bottom: 20px;
+    height: 10%
+  }
+  .image-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .result-notification {
+    font-size: 1.5rem;
+    margin-top: 20px;
+  }
+  .unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-10 col-md-8 col-lg-6">
+      <div class="card">
+        <div class=" text-center card-header">
+          Transcribe the Text from the Image
+        </div>
+        <div class="card-body">
+          <div class="image-container unselectable">
+            <!-- Use the URL name you defined in your urls.py -->
+            <img id="textImage" src="" alt="Text as Image"> 
+            
+          </div>
+          <div class="transcription-area">
+            <textarea class="form-control" id="transcribedText" rows="5"></textarea>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <button class="btn btn-primary btn-block" onclick="submitTranscription()">Submit</button>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-secondary btn-block" onclick="restartJob()">Restart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-10 col-md-8 col-lg-6">
+      <div class="alert alert-success result-notification" role="alert" id="resultNotification" style="display: none;">
+        <p></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+   
+  function createImageWithText(text){
+    // Create a canvas element
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set the canvas dimensions
+    const width = 500;
+    const height = 200;
+    canvas.width = width;
+    canvas.height = height;
+    
+    // Set the font and size
+    ctx.font = 'bold 18px sen-sarif';
+    
+    // Set the text baseline
+    ctx.textBaseline = 'top';
+   // Split the text into words
+    const words = text.split(' ');
+
+    
+    // Variables to keep track of the current line and its width
+    let line = '';
+    let lineWidth = 0;
+    let y = 2; // Starting y position for the text
+
+    // Loop through each word
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i];
+      const wordWidth = ctx.measureText(word).width;
+
+      // Check if the word fits on the current line
+      if ((lineWidth + wordWidth + ctx.measureText(' ').width) < width && line.length < 60) {
+        // Add the word to the current line
+        line += word + ' ';
+        lineWidth += wordWidth + ctx.measureText(' ').width;
+      } else {
+        // If the word doesn't fit, start a new line
+        ctx.fillText(line, 2, y);
+        y += 20; // Increase the y position for the next line
+        line = word + ' '; // Start a new line with the current word
+        lineWidth = wordWidth + ctx.measureText(' ').width;
+      }
+
+      // Check if we need to start a new line because we've reached the word limit
+      if (line.length >= 60) {
+        ctx.fillText(line, 2, y);
+        y += 20;
+        line = '';
+        lineWidth = 0;
+      }
+    }
+
+    // Draw the last line if it's not empty
+    if (line) {
+      ctx.fillText(line, 10, y);
+    }
+
+    // Convert the canvas to an image
+    const image = new Image();
+    image.src = canvas.toDataURL();
+
+    // Append the image to the document
+    document.getElementById('textImage').src = image.src;
+  }
+
+
+// Example usage with your text
+let text = "{{ paratext|escapejs }}";
+let is_demo = "{{ is_demo|escapejs }}";
+let level = "{{ level|escapejs }}";
+console.log("the task is for : ", level," demo : ",is_demo)
+createImageWithText(text);
+
+function submitTranscription() {
+  let transcribedText = document.getElementById('transcribedText').value;
+  if(text.toLowerCase() === transcribedText.toLowerCase())
+  {
+    showNotification("Transcription submitted!");
+  }
+  else{
+    showNotification("Transcription Failed!");
+    
+  }
+  // Here you would add your logic to check the transcription against the original text
+  // For example, you could send the transcribedText to a server to check its accuracy
+  // For this example, we'll just show a notification
+}
+
+function restartJob() {
+  document.getElementById('transcribedText').value = '';
+  // You can also reset any other elements or variables here
+  showNotification("Job restarted.");
+}
+
+function showNotification(message) {
+  let notification = document.getElementById('resultNotification');
+  notification.style.display = 'block';
+  notification.querySelector('p').textContent = message;
+  setTimeout(function() {
+    notification.style.display = 'none';
+  }, 3000); // Hide the notification after 3 seconds
+}
+</script>
+{% endblock %}

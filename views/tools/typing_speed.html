@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typing Speed Test</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+  .timer {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  .result {
+    font-size: 1.5rem;
+  }
+  .sample-text {
+    margin-bottom: 20px;
+  }
+  .test-area {
+    margin-bottom: 20px;
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Typing Speed Test</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-10 col-md-8 col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          Start Typing Speed Test
+        </div>
+        <div class="card-body">
+          <div class="sample-text">
+            <p id="sampleText"></p>
+          </div>
+          <div class="test-area">
+            <textarea class="form-control" id="typedText" rows="3"></textarea>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <button class="btn btn-success btn-block" onclick="startTypingTest()">Start Test</button>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-danger btn-block" onclick="endTypingTest()">End Test</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-10 col-md-8 col-lg-6">
+      <div class="alert alert-info" role="alert">
+        <p class="timer"><span id="timer"></span></p>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-10 col-md-8 col-lg-6">
+      <div class="alert alert-success" role="alert">
+        <p class="result" id="result"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let startTime;
+let endTime;
+let timer;
+let sampleText = "Type this text as fast as you can!";
+
+function startTypingTest() {
+  document.getElementById('sampleText').innerText = sampleText;
+  document.getElementById('typedText').value = '';
+  startTime = new Date();
+  timer = setInterval(updateTimer, 1000);
+  
+  // Disable copy, paste, cut, and text selection
+  const textarea = document.getElementById('typedText');
+  textarea.oncopy = () => false;
+  textarea.oncut = () => false;
+  textarea.onpaste = () => false;
+  textarea.onkeydown = (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+    }
+  };
+  textarea.onselectstart = () => false; // Disable text selection in IE
+  textarea.ondragstart = () => false; // Disable dragging text in IE
+  textarea.style.userSelect = 'none'; // Disable text selection in modern browsers
+}
+
+function updateTimer() {
+  let now = new Date();
+  let elapsed = Math.floor((now - startTime) / 1000);
+  document.getElementById('timer').innerText = `Time: ${elapsed} seconds`;
+}
+
+function endTypingTest() {
+  clearInterval(timer);
+  endTime = new Date();
+  let typedText = document.getElementById('typedText').value;
+  let elapsedTime = (endTime - startTime) / 1000;
+  let wordsTyped = typedText.split(' ').length;
+  let wordsPerMinute = (wordsTyped / elapsedTime) * 60;
+  let accuracy = calculateAccuracy(typedText, sampleText);
+
+  document.getElementById('result').innerText = `WPM: ${wordsPerMinute.toFixed(2)}, Accuracy: ${accuracy.toFixed(2)}%`;
+}
+
+function calculateAccuracy(typed, sample) {
+  let typedWords = typed.split(' ');
+  let sampleWords = sample.split(' ');
+  let correctWords = 0;
+
+  for (let i = 0; i < sampleWords.length; i++) {
+    if (sampleWords[i] === typedWords[i]) {
+      correctWords++;
+    }
+  }
+  return (correctWords / sampleWords.length) * 100;
+}
+</script>
+
+</body>
+</html>
+
+

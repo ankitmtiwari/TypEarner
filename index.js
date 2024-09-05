@@ -1,11 +1,14 @@
-const express = require('express')
-const app = express()
-const port = 3000
+import { app } from "./app.js";
+import dotenv from "dotenv"
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+dotenv.config({
+  path: './.env'
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const connectServer = async () => {
+  app.listen(process.env.PORT, () => {
+    console.log(`app listening at ${process.env.PORT}`);
+  });
+};
+
+connectServer()

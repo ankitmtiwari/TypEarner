@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login & Registration Form</title>
+  <link rel="stylesheet" href="/public/css/loginpage.css">
+</head>
+<body>
+  <div class="container">
+    <div class="login form">
+      <header>Login</header>
+      <form id="loginForm" action="#" method='POST'>
+        <!-- {% csrf_token %} -->
+        <input type="text" id="loginEmail" placeholder="Enter your email" required>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <a href="#">Forgot password?</a>
+        <input type="submit" class="button" value="Login">
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+         <a href ='/registration'><label>Signup</label></a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var regPassword = document.getElementById('regPassword');
+      var regConfirmPassword = document.getElementById('regConfirmPassword');
+      var passwordMatch = document.getElementById('passwordMatch');
+      var registrationForm = document.getElementById('registrationForm');
+
+      registrationForm.addEventListener('submit', function(event) {
+        if (regPassword.value !== regConfirmPassword.value) {
+          event.preventDefault();
+          passwordMatch.style.display = 'inline';
+        } else {
+          passwordMatch.style.display = 'none';
+        }
+      });
+
+      regPassword.addEventListener('input', function() {
+        passwordMatch.style.display = 'none';
+      });
+
+      regConfirmPassword.addEventListener('input', function() {
+        passwordMatch.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

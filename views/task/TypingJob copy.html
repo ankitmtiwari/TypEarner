@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typing Job Application</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+  .transcription-area {
+    margin-bottom: 20px;
+  }
+  .image-container {
+    text-align: center;
+    margin-bottom: 20px;
+    height: 40%;
+  }
+  .result-notification {
+    font-size: 1.5rem;
+    margin-top: 20px;
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Typing Job Application</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card">
+        <div class="card-header">
+          Transcribe the Text from the Image
+        </div>
+        <div class="card-body">
+          <div class="image-container">
+            <img class="text_image"  src="/static/images/biryani.png" alt="Transcription Image" class="img-fluid">
+          </div>
+          <div class="transcription-area">
+            <textarea class="form-control" id="transcribedText" rows="10"></textarea>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <button class="btn btn-primary btn-block" onclick="submitTranscription()">Submit</button>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-secondary btn-block" onclick="restartJob()">Restart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-10 col-md-8 col-lg-6">
+      <div class="alert alert-success result-notification" role="alert" id="resultNotification" style="display: none;">
+        <p></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function submitTranscription() {
+  let transcribedText = document.getElementById('transcribedText').value;
+  // Here you would add your logic to check the transcription against the original text
+  // For example, you could send the transcribedText to a server to check its accuracy
+  // For this example, we'll just show a notification
+  showNotification("Transcription submitted!");
+}
+
+function restartJob() {
+  document.getElementById('transcribedText').value = '';
+  // You can also reset any other elements or variables here
+  showNotification("Job restarted.");
+}
+
+function showNotification(message) {
+  let notification = document.getElementById('resultNotification');
+  notification.style.display = 'block';
+  notification.querySelector('p').textContent = message;
+  setTimeout(function() {
+    notification.style.display = 'none';
+  }, 3000); // Hide the notification after 3 seconds
+}
+</script>
+
+</body>
+</html>
