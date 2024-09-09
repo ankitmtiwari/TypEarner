@@ -12,9 +12,9 @@
   <div class="container">
     <div class="registration form">
       <header>Signup</header>
-      <form id="registrationForm" action="#" method='POST'>
+      <form id="registrationForm" action="/api/v1/register" method='POST'>
         <!-- {% csrf_token %} -->
-        <input type="text" id="regEmail" placeholder="Enter your email" name='regEmail' required>
+        <input type="email" id="regEmail" placeholder="Enter your email" name='regEmail' required>
         <input type="password" id="regPassword" placeholder="Create a password" name='regPassword' required>
         <input type="password" id="regConfirmPassword" placeholder="Confirm your password"  name='regConfirmPassword' required>
         <span id="passwordMatch" class="error-message" style="display: none;">Passwords don't match</span>
@@ -36,12 +36,16 @@
   <!-- {% comment %}  -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      var regPassword = document.getElementById('regPassword');
-      var regConfirmPassword = document.getElementById('regConfirmPassword');
-      var passwordMatch = document.getElementById('passwordMatch');
-      var registrationForm = document.getElementById('registrationForm');
+      let  regEmail = document.getElementById('regEmail');
+      let regPassword = document.getElementById('regPassword');
+      let regConfirmPassword = document.getElementById('regConfirmPassword');
+      let  passwordMatch = document.getElementById('passwordMatch');
+      let  emailCorrect = document.getElementById('emailCorrect');
+      let registrationForm = document.getElementById('registrationForm');
 
-      registrationForm.addEventListener('submit', function(event) {
+      const email_regex= /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      registrationForm.addEventistener('submit', function(event) {
+        
         if (regPassword.value !== regConfirmPassword.value) {
           event.preventDefault();
           passwordMatch.style.display = 'inline';
