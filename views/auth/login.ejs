@@ -14,8 +14,13 @@
       <header>Login</header>
       <form id="loginForm" action="#" method='POST'>
         <!-- {% csrf_token %} -->
+        <% if (email && password) { %>
+        <input type="text" id="loginEmail" placeholder="Enter your email" value="<%= email %>" required>
+        <input type="password" id="loginPassword" placeholder="Enter your password" value="<%= password %>" required>
+        <% } else { %>
         <input type="text" id="loginEmail" placeholder="Enter your email" required>
         <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <% } %>
         <a href="#">Forgot password?</a>
         <input type="submit" class="button" value="Login">
       </form>
