@@ -1,68 +1,126 @@
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Login & Registration Form</title>
-  <link rel="stylesheet" href="/css/registartion.css">
-</head>
-<body>
-  <div class="container">
-    <div class="registration form">
-      <header>Signup</header>
-      <form id="registrationForm" action="/api/v1/register" method='POST'>
-        <!-- {% csrf_token %} -->
-        <input type="email" id="regEmail" placeholder="Enter your email" name='regEmail' required>
-        <input type="password" id="regPassword" placeholder="Create a password" name='regPassword' required>
-        <input type="password" id="regConfirmPassword" placeholder="Confirm your password"  name='regConfirmPassword' required>
-        <span id="passwordMatch" class="error-message" style="display: none;">Passwords don't match</span>
-        <!-- {% if messages %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="/css/registartion.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="registration form">
+        <header>Signup</header>
+        <form id="registrationForm" action="/api/v1/register" method="POST">
+          <!-- {% csrf_token %} -->
+          <input
+            type="text"
+            id="firstName"
+            placeholder="Enter your firstName"
+            name="regFirstName"
+            required
+          />
+          <input
+            type="text"
+            id="lastName"
+            placeholder="Enter your lastName"
+            name="regLastName"
+            required
+          />
+          <input
+            type="email"
+            id="regEmail"
+            placeholder="Enter your email"
+            name="regEmail"
+            required
+          />
+          <input
+            type="tel"
+            id="regPhone"
+            placeholder="Enter your Phone number"
+            name="regPhone"
+            pattern="[0-9]{10}"
+            required
+          />
+          <input
+            type="password"
+            id="regPassword"
+            placeholder="Create a password"
+            name="regPassword"
+            required
+          />
+          <input
+            type="password"
+            id="regConfirmPassword"
+            placeholder="Confirm your password"
+            name="regConfirmPassword"
+            required
+          />
+          <span id="passwordMatch" class="error-message" style="display: none"
+            >Password and Confirm Password don't match</span
+          >
+          <span id="emailCorrect" class="error-message" style="display: none"
+            >Please Enter Valid Email</span
+          >
+          <% typeof su%>
+          <!-- <- if {  ->
+          <- -> -->
+          <!-- {% if messages %}
             {% for message in messages %}
                 <span>{{ message }}</span>
             {% endfor %}
         {% endif %} -->
-        <input type="submit" class="button" value="Signup">
-      </form>
-      <div class="signup">
-        <span class="signup">Already have an account?
-          <a  href='/api/v1/login'> <label>Login</label></a>
-        </span>
+          <input type="submit" class="button" value="Signup" />
+        </form>
+        <div class="signup">
+          <span class="signup"
+            >Already have an account?
+            <a href="/api/v1/login"> <label>Login</label></a>
+          </span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- {% comment %}  -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      let  regEmail = document.getElementById('regEmail');
-      let regPassword = document.getElementById('regPassword');
-      let regConfirmPassword = document.getElementById('regConfirmPassword');
-      let  passwordMatch = document.getElementById('passwordMatch');
-      let  emailCorrect = document.getElementById('emailCorrect');
-      let registrationForm = document.getElementById('registrationForm');
+    <!-- {% comment %}  -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let regFirstName = document.getElementById("regFirstName");
+        let regLastName = document.getElementById("regLastName");
+        let regEmail = document.getElementById("regEmail");
+        let regPhone = document.getElementById("regPhone");
+        let regPassword = document.getElementById("regPassword");
+        let regConfirmPassword = document.getElementById("regConfirmPassword");
+        let passwordMatch = document.getElementById("passwordMatch");
+        let emailCorrect = document.getElementById("emailCorrect");
+        let registrationForm = document.getElementById("registrationForm");
 
-      const email_regex= /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      registrationForm.addEventistener('submit', function(event) {
-        
-        if (regPassword.value !== regConfirmPassword.value) {
-          event.preventDefault();
-          passwordMatch.style.display = 'inline';
-        } else {
-          passwordMatch.style.display = 'none';
-        }
+        const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        registrationForm.addEventistener("submit", function (event) {
+          if (!email_regex.test(regEmail)) {
+            event.preventDefault();
+            emailCorrect.style.display = "inline";
+          } else {
+            emailCorrect.style.display = "none";
+          }
+
+          if (regPassword.value !== regConfirmPassword.value) {
+            event.preventDefault();
+            passwordMatch.style.display = "inline";
+          } else {
+            passwordMatch.style.display = "none";
+          }
+        });
+
+        regPassword.addEventListener("input", function () {
+          passwordMatch.style.display = "none";
+        });
+
+        regConfirmPassword.addEventListener("input", function () {
+          passwordMatch.style.display = "none";
+        });
       });
-
-      regPassword.addEventListener('input', function() {
-        passwordMatch.style.display = 'none';
-      });
-
-      regConfirmPassword.addEventListener('input', function() {
-        passwordMatch.style.display = 'none';
-      });
-    });
-  </script> 
-  <!-- {% endcomment %} -->
-</body>
+    </script>
+    <!-- {% endcomment %} -->
+  </body>
 </html>

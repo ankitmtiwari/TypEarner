@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Login & Registration Form</title>
+  <title>Login Form</title>
   <link rel="stylesheet" href="/css/loginpage.css">
 </head>
 <body>
@@ -14,13 +14,8 @@
       <header>Login</header>
       <form id="loginForm" action="#" method='POST'>
         <!-- {% csrf_token %} -->
-        <% if (email && password) { %>
-        <input type="text" id="loginEmail" placeholder="Enter your email" value="<%= email %>" required>
-        <input type="password" id="loginPassword" placeholder="Enter your password" value="<%= password %>" required>
-        <% } else { %>
-        <input type="text" id="loginEmail" placeholder="Enter your email" required>
+        <input type="text" id="loginEmail" placeholder="Enter your email" value="<%=  typeof email !== undefined? email:'' %>" required>
         <input type="password" id="loginPassword" placeholder="Enter your password" required>
-        <% } %>
         <a href="#">Forgot password?</a>
         <input type="submit" class="button" value="Login">
       </form>
