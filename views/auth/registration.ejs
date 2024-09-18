@@ -63,14 +63,15 @@
           <span id="emailCorrect" class="error-message" style="display: none"
             >Please Enter Valid Email</span
           >
-          <% typeof su%>
-          <!-- <- if {  ->
-          <- -> -->
-          <!-- {% if messages %}
-            {% for message in messages %}
-                <span>{{ message }}</span>
-            {% endfor %}
-        {% endif %} -->
+          <% if (typeof success !== 'undefined' && success !== null) { %>
+            <% if (success) { %>
+              <h3><%= message %></h3>
+            <% } else { %>
+              <h3>Error: <%= message %></h3>
+            <% } %>
+          <% } %>
+
+         
           <input type="submit" class="button" value="Signup" />
         </form>
         <div class="signup">
