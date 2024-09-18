@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { userRouters } from "./src/routes/user_routes.js";
 import { toolsRouter } from "./src/routes/tools_routes.js";
+import { homePageController } from "./src/controllers/user_controller.js";
 
 const app = express();
 
@@ -36,7 +37,5 @@ app.use(express.static('public'))
 app.use('/api/v1', userRouters)
 app.use('/api/v1/tools', toolsRouter)
 
-app.get('/', (req, res)=>{
-  res.render('task/index')
-})
+app.get('/', homePageController)
 export { app };

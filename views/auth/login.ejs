@@ -12,11 +12,17 @@
   <div class="container">
     <div class="login form">
       <header>Login</header>
-      <form id="loginForm" action="#" method='POST'>
-        <!-- {% csrf_token %} -->
-        <input type="text" id="loginEmail" placeholder="Enter your email" value="<%=  typeof email !== undefined? email:'' %>" required>
-        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+      <form id="loginForm" action="/api/v1/login" method='POST'>
+        <input type="text" id="loginEmail" name="email" placeholder="Enter your email" value="<%=  typeof data !== undefined? data.email:'' %>" required>
+        <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
         <a href="#">Forgot password?</a>
+        <% if (typeof success !== 'undefined' && success !== null) { %>
+          <% if (success) { %>
+            <h3><%= message %></h3>
+          <% } else { %>
+            <h5>Error: <%= message %></h5>
+          <% } %>
+        <% } %>
         <input type="submit" class="button" value="Login">
       </form>
       <div class="signup">
@@ -29,27 +35,9 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      var regPassword = document.getElementById('regPassword');
-      var regConfirmPassword = document.getElementById('regConfirmPassword');
-      var passwordMatch = document.getElementById('passwordMatch');
-      var registrationForm = document.getElementById('registrationForm');
-
-      registrationForm.addEventListener('submit', function(event) {
-        if (regPassword.value !== regConfirmPassword.value) {
-          event.preventDefault();
-          passwordMatch.style.display = 'inline';
-        } else {
-          passwordMatch.style.display = 'none';
-        }
-      });
-
-      regPassword.addEventListener('input', function() {
-        passwordMatch.style.display = 'none';
-      });
-
-      regConfirmPassword.addEventListener('input', function() {
-        passwordMatch.style.display = 'none';
-      });
+      var regPassword = document.getElementById('loginEmail');
+      var passwordMatch = document.getElementById('loginPassword');
+      var registrationForm = document.getElementById('loginForm');
     });
   </script>
 </body>

@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       require: [true, "Password is required"],
     },
+    accessToken: {
+      type: String,
+    },
     isAcDeleted: {
       type: Boolean,
       default: false,
@@ -60,6 +63,9 @@ userSchema.methods.createAccessToken = async function () {
   return await jwt.sign(
     {
       _id: this._id,
+      email: this.email,
+      firstName: this.firstName,
+      lastName:this.lastName
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
