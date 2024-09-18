@@ -204,18 +204,16 @@ const doLoginUserController = async (req, res) => {
 };
 
 const homePageController = async (req, res) => {
-  console.log("came to After logged in");
   const accessToken = req.cookies.accessToken;
-  console.log(accessToken);
   if (!accessToken) {
-    res.render("task/index");
+    res.render("task/index", {success:true});
   } else {
     const currentUser = jwt.verify(
       accessToken,
       process.env.ACCESS_TOKEN_SECRET
     );
      const {_id, email, firstName, lastName}= currentUser;
-     res.render("task/index", {data:{"firstName":firstName, "lastName":lastName}});
+     res.render("task/index", {success: true, data:{"firstName":firstName, "lastName":lastName, "email":email}});
     
   }
 };

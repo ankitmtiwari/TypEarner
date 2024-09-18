@@ -36,7 +36,8 @@
               TypEarn
             </span>
           </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
@@ -114,13 +115,21 @@
                       Today! 🚀
                     </h1>
                     <p>
-                      " Work from anywhere, anytime with our online typing jobs – no commute, just flexibility and income.
-                       Join now! "
+                      " Work from anywhere, anytime with our online typing jobs – no commute, just flexibility and
+                      income.
+                      Join now! "
                     </p>
                     <div class="btn-box">
-                      <a href="/api/v1/register" class="btn-1">
-                        Join now!
-                      </a>
+
+                      <% if (typeof data !=='undefined' && typeof data.firstName !=='undefined') { %>
+                        <a href="#" class="btn-1">
+                          <%= data.firstName %>
+                        </a>
+                      <% } else { %>
+                          <a href="/api/v1/register" class="btn-1">
+                            Join now!
+                          </a>
+                      <% }%>
                       <a href="" class="btn-2">
                         Take Demo
                       </a>
@@ -146,8 +155,9 @@
                       Opportunities! 🎓 Today
                     </h1>
                     <p>
-                      Welcome to the premier destination for online typing jobs! Whether you're a seasoned typist or just starting out,
-                       our platform offers a flexible and rewarding way to earn from the comfort of your home.
+                      Welcome to the premier destination for online typing jobs! Whether you're a seasoned typist or
+                      just starting out,
+                      our platform offers a flexible and rewarding way to earn from the comfort of your home.
                     </p>
                     <div class="btn-box">
                       <a href="/api/v1/register" class="btn-1">
@@ -178,7 +188,7 @@
                       Anytime! 🎯
                     </h1>
                     <p>
-                      Join our remote typist community and enjoy the freedom to work your way. 
+                      Join our remote typist community and enjoy the freedom to work your way.
                       Find the perfect balance of work and life on our platform – start earning today!
                     </p>
                     <div class="btn-box">
@@ -226,12 +236,17 @@
               </h2>
             </div>
             <p>
-              Welcome to the premier destination for online typing jobs! Whether you're a seasoned typist or just starting out,
-               our platform offers a flexible and rewarding way to earn from the comfort of your home. With a wide range of typing projects available, from transcription to data entry, you can choose assignments that fit your skills and schedule. 
-              Turn your typing prowess into a lucrative opportunity today. Transform your typing skills into a source of income with our diverse selection of online typing jobs.
-               Whether you're a fast typist looking for transcription work or someone detail-oriented for data entry tasks, our platform caters to every typing talent.
-                Enjoy the convenience of choosing from a variety of projects that match your pace and preferences.
-               Start building your portfolio and watch your earnings grow with every keystroke 
+              Welcome to the premier destination for online typing jobs! Whether you're a seasoned typist or just
+              starting out,
+              our platform offers a flexible and rewarding way to earn from the comfort of your home. With a wide range
+              of typing projects available, from transcription to data entry, you can choose assignments that fit your
+              skills and schedule.
+              Turn your typing prowess into a lucrative opportunity today. Transform your typing skills into a source of
+              income with our diverse selection of online typing jobs.
+              Whether you're a fast typist looking for transcription work or someone detail-oriented for data entry
+              tasks, our platform caters to every typing talent.
+              Enjoy the convenience of choosing from a variety of projects that match your pace and preferences.
+              Start building your portfolio and watch your earnings grow with every keystroke
             </p>
             <p> "🎯 Join the Typing Revolution – Work from Anywhere, Anytime! 🎯"</p>
             <div class="btn-box">
@@ -267,7 +282,7 @@
           </div>
           <div class="detail-box">
             <h5>
-               Online Tools
+              Online Tools
             </h5>
           </div>
         </div>
@@ -307,7 +322,7 @@
           </div>
           <div class="detail-box">
             <h5>
-              High Rate 
+              High Rate
             </h5>
           </div>
         </div>
@@ -317,7 +332,7 @@
           </div>
           <div class="detail-box">
             <h5>
-              Fun with Earn 
+              Fun with Earn
             </h5>
           </div>
         </div>
@@ -343,13 +358,21 @@
         <h2>
           About TypEarn!
         </h2>
-        <p>Welcome to TypEarn, your ultimate destination for hassle-free online tools and job opportunities that cater to all your digital document and image needs. At TypEarn, we understand the importance of efficiency and quality in the digital age, which is why we've created a platform that combines cutting-edge technology with a user-friendly interface to empower you like never before.</p>
-        <p>Whether you're looking to compress PDFs, resize images, convert files between various formats like JPG, JPEG, PNG, Word, and Excel, or even change image dimensions, TypEarn has got you covered. Our suite of online tools is designed to streamline your workflow, saving you time and effort so you can focus on what truly matters.</p>
-        <p>Join the TypEarn community today and unlock a world of possibilities. Whether you're looking to simplify your digital tasks or earn money doing what you love, we're here to support you every step of the way. Together, let's turn your digital challenges into opportunities for success.
-          <br>  
+        <p>Welcome to TypEarn, your ultimate destination for hassle-free online tools and job opportunities that cater
+          to all your digital document and image needs. At TypEarn, we understand the importance of efficiency and
+          quality in the digital age, which is why we've created a platform that combines cutting-edge technology with a
+          user-friendly interface to empower you like never before.</p>
+        <p>Whether you're looking to compress PDFs, resize images, convert files between various formats like JPG, JPEG,
+          PNG, Word, and Excel, or even change image dimensions, TypEarn has got you covered. Our suite of online tools
+          is designed to streamline your workflow, saving you time and effort so you can focus on what truly matters.
+        </p>
+        <p>Join the TypEarn community today and unlock a world of possibilities. Whether you're looking to simplify your
+          digital tasks or earn money doing what you love, we're here to support you every step of the way. Together,
+          let's turn your digital challenges into opportunities for success.
+          <br>
           Welcome to TypEarn – where efficiency meets excellence, and skills meet success.
         </p>
-        
+
         <a href="">
           Read More
         </a>
@@ -373,7 +396,8 @@
                 </h2>
               </div>
               <div class="tab_container">
-                <div class="t-link-box" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <div class="t-link-box" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                  aria-controls="collapseOne">
                   <div class="img-box">
                     <img src="/images/f1.png" alt="">
                   </div>
@@ -386,7 +410,8 @@
                     </h3>
                   </div>
                 </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                  aria-expanded="false" aria-controls="collapseTwo">
                   <div class="img-box">
                     <img src="/images/f2.png" alt="">
                   </div>
@@ -399,20 +424,22 @@
                     </h3>
                   </div>
                 </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseThree"
+                  aria-expanded="false" aria-controls="collapseThree">
                   <div class="img-box">
                     <img src="/images/f3.png" alt="">
                   </div>
                   <div class="detail-box">
                     <h5>
-                      More than 700,000 
+                      More than 700,000
                     </h5>
                     <h3>
                       Worldwide TypEarners
                     </h3>
                   </div>
                 </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseFour"
+                  aria-expanded="false" aria-controls="collapseFour">
                   <div class="img-box">
                     <img src="/images/f4.png" alt="">
                   </div>
@@ -476,10 +503,14 @@
                   <h4>
                     Michael K., Freelance Transcriptionist
                   </h4>
-                  <p>"I've been using TypEarn for over a year now, and it has been a game-changer for my freelance business. 
-                    The platform is incredibly user-friendly, and the variety of tools available, like the file converters and image resizers, have saved me countless hours. 
-                    The job opportunities are plentiful, and I love the flexibility to choose projects that fit my schedule. TypEarn's support team is also top-notch; they're always ready to help with any questions or issues.
-                     I couldn't be happier with my experience!"</p>
+                  <p>"I've been using TypEarn for over a year now, and it has been a game-changer for my freelance
+                    business.
+                    The platform is incredibly user-friendly, and the variety of tools available, like the file
+                    converters and image resizers, have saved me countless hours.
+                    The job opportunities are plentiful, and I love the flexibility to choose projects that fit my
+                    schedule. TypEarn's support team is also top-notch; they're always ready to help with any questions
+                    or issues.
+                    I couldn't be happier with my experience!"</p>
                   <img src="/images/quote.png" alt="">
                 </div>
               </div>
@@ -489,9 +520,11 @@
                     Amrita Thakur, Remote Data Entry Specialist
                   </h4>
                   <p>"TypEarn has been instrumental in helping me transition to a fully remote work lifestyle.
-                     The online tools are not just helpful but essential for my data entry tasks. 
-                     The ability to compress PDFs and convert files on the fly has made my work so much more efficient. And the job board is a goldmine – I've secured consistent work that pays well and allows me to work from the comfort of my home.
-                     Kudos to TypEarn for creating such a valuable resource for remote workers!"</p>
+                    The online tools are not just helpful but essential for my data entry tasks.
+                    The ability to compress PDFs and convert files on the fly has made my work so much more efficient.
+                    And the job board is a goldmine – I've secured consistent work that pays well and allows me to work
+                    from the comfort of my home.
+                    Kudos to TypEarn for creating such a valuable resource for remote workers!"</p>
                   <img src="/images/quote.png" alt="">
                 </div>
               </div>
@@ -500,10 +533,12 @@
                   <h4>
                     Jessica L., Aspiring Transcriptionist
                   </h4>
-                  <p>"I'm relatively new to TypEarn, and so far, I'm impressed with the quality of the tools and the job opportunities available.
-                     One suggestion I have is to possibly include a training or tutorial section for newcomers. 
-                    I found the transition into some of the specialized typing jobs a bit challenging at first. Having some guidance on industry-specific formatting or tips would be incredibly helpful.
-                     Other than that, I'm excited to continue growing my skills and earning potential with TypEarn!"</p>
+                  <p>"I'm relatively new to TypEarn, and so far, I'm impressed with the quality of the tools and the job
+                    opportunities available.
+                    One suggestion I have is to possibly include a training or tutorial section for newcomers.
+                    I found the transition into some of the specialized typing jobs a bit challenging at first. Having
+                    some guidance on industry-specific formatting or tips would be incredibly helpful.
+                    Other than that, I'm excited to continue growing my skills and earning potential with TypEarn!"</p>
                   <img src="/images/quote.png" alt="">
                 </div>
               </div>
@@ -583,7 +618,8 @@
                 Offices
               </h5>
               <p>
-                Readable content of a page when looking at its layoutreadable content of a page when looking at its layout
+                Readable content of a page when looking at its layoutreadable content of a page when looking at its
+                layout
               </p>
             </div>
 
@@ -592,7 +628,8 @@
                 Information
               </h5>
               <p>
-                Readable content of a page when looking at its layoutreadable content of a page when looking at its layout
+                Readable content of a page when looking at its layoutreadable content of a page when looking at its
+                layout
               </p>
             </div>
 
