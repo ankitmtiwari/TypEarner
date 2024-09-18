@@ -1,4 +1,5 @@
 import { userModel } from "../models/user_model.js";
+import jwt from "jsonwebtoken";
 
 const generateAuthTokens = async (userId) => {
   try {
@@ -126,7 +127,7 @@ const doRegisterUserController = async (req, res) => {
 //Get Login Controller
 const loginUserController = async (req, res) => {
   const email = req.session.email || "";
-  res.render("auth/login", { data:{email: email} });
+  res.render("auth/login", { data: { email: email } });
 };
 
 //do the login
@@ -172,7 +173,7 @@ const doLoginUserController = async (req, res) => {
   }
 
   //generate  auth Token to keep the user logged in
-  const accessToken  = await generateAuthTokens(existingUser._id);
+  const accessToken = await generateAuthTokens(existingUser._id);
 
   //server error if unable to generate auth token
   if (!accessToken) {
@@ -204,10 +205,19 @@ const doLoginUserController = async (req, res) => {
 
 const homePageController = async (req, res) => {
   console.log("came to After logged in");
-  const accessToken= req.cookies.accessToken;
-  // const {_id, email, firstName, lastName}= req.cookies;
-  // console.log(firstName, lastName, email)
-  res.render("task/index");
+  const accessToken = req.cookies.accessToken;
+  console.log(accessToken);
+  if (!accessToken) {
+    res.render("task/index");
+  } else {
+    const currentUser = jwt.verify(
+      accessToken,
+      process.env.ACCESS_TOKEN_SECRET
+    );
+     const {_id, email, firstName, lastName}= currentUser;
+     res.render("task/index", {data:{"firstName":firstName, "lastName":lastName}});
+    
+  }
 };
 export {
   registerUserController,

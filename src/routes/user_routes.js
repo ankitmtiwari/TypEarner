@@ -9,6 +9,6 @@ userRouters.route("/register").post(doRegisterUserController);
 
 userRouters.route("/login").get(loginUserController);
 userRouters.route("/login").post(doLoginUserController);
-userRouters.route("/").get(homePageController);
+// userRouters.route("/").get(homePageController);
 
 export { userRouters };
