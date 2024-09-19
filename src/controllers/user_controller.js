@@ -206,21 +206,28 @@ const doLoginUserController = async (req, res) => {
 const homePageController = async (req, res) => {
   const accessToken = req.cookies.accessToken;
   if (!accessToken) {
-    res.render("task/index", {success:true});
+    res.render("task/index", { success: true });
   } else {
     const currentUser = jwt.verify(
       accessToken,
       process.env.ACCESS_TOKEN_SECRET
     );
-     const {_id, email, firstName, lastName}= currentUser;
-     res.render("task/index", {success: true, data:{"firstName":firstName, "lastName":lastName, "email":email}});
-    
+    const { _id, email, firstName, lastName } = currentUser;
+    res.status(200).render("task/index", {
+      success: true,
+      data: { firstName: firstName, lastName: lastName, email: email },
+    });
   }
 };
 
-const dashBoardController  = async(req, res)=>{
-  res.render("task/dashboard")
-}
+const dashBoardController = async (req, res) => {
+  res.status(200).render("task/dashboard");
+};
+
+const typingTaskController = async (req, res) => {
+  res.status(200).render("task/typing_task", {"paratext":"HII THIS IS PARATEXT FROM SERVER"});
+};
+
 export {
   registerUserController,
   doRegisterUserController,
@@ -228,4 +235,5 @@ export {
   doLoginUserController,
   homePageController,
   dashBoardController,
+  typingTaskController,
 };
