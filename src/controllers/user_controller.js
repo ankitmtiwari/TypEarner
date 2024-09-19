@@ -217,10 +217,15 @@ const homePageController = async (req, res) => {
     
   }
 };
+
+const dashBoardController  = async(req, res)=>{
+  res.render("task/dashboard")
+}
 export {
   registerUserController,
   doRegisterUserController,
   loginUserController,
   doLoginUserController,
   homePageController,
+  dashBoardController,
 };

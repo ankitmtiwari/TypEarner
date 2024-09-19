@@ -82,46 +82,5 @@
         </div>
       </div>
     </div>
-
-    <!-- {% comment %}  -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let regFirstName = document.getElementById("regFirstName");
-        let regLastName = document.getElementById("regLastName");
-        let regEmail = document.getElementById("regEmail");
-        let regPhone = document.getElementById("regPhone");
-        let regPassword = document.getElementById("regPassword");
-        let regConfirmPassword = document.getElementById("regConfirmPassword");
-        let passwordMatch = document.getElementById("passwordMatch");
-        let emailCorrect = document.getElementById("emailCorrect");
-        let registrationForm = document.getElementById("registrationForm");
-
-        const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        registrationForm.addEventistener("submit", function (event) {
-          if (!email_regex.test(regEmail)) {
-            event.preventDefault();
-            emailCorrect.style.display = "inline";
-          } else {
-            emailCorrect.style.display = "none";
-          }
-
-          if (regPassword.value !== regConfirmPassword.value) {
-            event.preventDefault();
-            passwordMatch.style.display = "inline";
-          } else {
-            passwordMatch.style.display = "none";
-          }
-        });
-
-        regPassword.addEventListener("input", function () {
-          passwordMatch.style.display = "none";
-        });
-
-        regConfirmPassword.addEventListener("input", function () {
-          passwordMatch.style.display = "none";
-        });
-      });
-    </script>
-    <!-- {% endcomment %} -->
   </body>
 </html>
