@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-
-{% block  content%}
-
+<%- include('tool_header') %>
 <style>
   .transcription-area {
     margin-bottom: 20px;
@@ -130,7 +127,7 @@
 
 
 // Example usage with your text
-let text = "{{ paratext|escapejs }}";
+let text = "<%= typeof paratext !== undefined? paratext: 'DEMO TEXT FROM UI' %>";
 let level = "{{ level|escapejs }}";
 console.log("the task is for : ", level)
 createImageWithText(text);
@@ -165,4 +162,4 @@ function showNotification(message) {
   }, 3000); // Hide the notification after 3 seconds
 }
 </script>
-{% endblock %}
+<%- include('tool_footer') %>

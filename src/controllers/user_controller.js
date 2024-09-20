@@ -1,3 +1,4 @@
+import { configDotenv } from "dotenv";
 import { userModel } from "../models/user_model.js";
 import jwt from "jsonwebtoken";
 
@@ -133,7 +134,7 @@ const loginUserController = async (req, res) => {
 //do the login
 const doLoginUserController = async (req, res) => {
   const { email, password } = req.body;
-  const phoneNumber = "1234567890";
+  const phoneNumber = "";
   // const email = "";
   // const password = "1234";
 
@@ -148,7 +149,7 @@ const doLoginUserController = async (req, res) => {
 
   //check if user exists with given username or email
   const existingUser = await userModel.findOne({
-    $or: [{ phoneNumber }, { email }],
+    $or: [ { email }, { phoneNumber }],
   });
 
   //error if no user found
@@ -224,8 +225,21 @@ const dashBoardController = async (req, res) => {
   res.status(200).render("task/dashboard");
 };
 
+const aboutPageController  = async (req, res) => {
+  res.status(200).render("task/about");
+};
+
+const TNCPageController  = async (req, res) => {
+  res.status(200).render("task/tnc");
+};
+
 const typingTaskController = async (req, res) => {
   res.status(200).render("task/typing_task", {"paratext":"HII THIS IS PARATEXT FROM SERVER"});
+};
+
+
+const demoTypingTaskController = async (req, res) => {
+  res.status(200).render("task/demo_task", {"paratext":"HII THIS IS DEMO RANDOM PARATEXT FROM SERVER"});
 };
 
 export {
@@ -234,6 +248,9 @@ export {
   loginUserController,
   doLoginUserController,
   homePageController,
+  aboutPageController,
+  TNCPageController,
   dashBoardController,
   typingTaskController,
+  demoTypingTaskController,
 };

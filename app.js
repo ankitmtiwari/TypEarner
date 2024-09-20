@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { userRouters } from "./src/routes/user_routes.js";
 import { toolsRouter } from "./src/routes/tools_routes.js";
-import { homePageController } from "./src/controllers/user_controller.js";
+import { homePageController, aboutPageController, TNCPageController } from "./src/controllers/user_controller.js";
 
 const app = express();
 
@@ -38,4 +38,8 @@ app.use('/api/v1', userRouters)
 app.use('/api/v1/tools', toolsRouter)
 
 app.get('/', homePageController)
+app.get('/about', aboutPageController)
+app.get('/tnc', TNCPageController);
+
+
 export { app };

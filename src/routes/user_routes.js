@@ -8,6 +8,7 @@ import {
   doLoginUserController,
   dashBoardController,
   typingTaskController,
+  demoTypingTaskController,
 } from "../controllers/user_controller.js";
 
 //All paths starting from /api/v1/......
@@ -17,7 +18,10 @@ userRouters.route("/register").post(doRegisterUserController);
 userRouters.route("/login").get(loginUserController);
 userRouters.route("/login").post(doLoginUserController);
 
-userRouters.route("/dashboard").get(dashBoardController);
-userRouters.route("/typing_task").get(typingTaskController);
+import { checkAuthMiddleware } from "../middlewares/auth_middleware.js";
+userRouters.route("/dashboard").get(checkAuthMiddleware, dashBoardController);
+userRouters.route("/typing_task").get(checkAuthMiddleware, typingTaskController);
+
+userRouters.route("/demo_task").get(demoTypingTaskController);
 
 export { userRouters };
