@@ -97,7 +97,30 @@
 let startTime;
 let endTime;
 let timer;
-let sampleText = "Type this text as fast as you can!";
+
+function getRandomWord(length) {
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  let word = '';
+  for (let i = 0; i < length; i++) {
+    word += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return word;
+}
+
+function generateRandomString(wordCount) {
+  let randomString = '';
+  for (let i = 0; i < wordCount; i++) {
+    // Generate random word lengths between 3 and 10 characters
+    const randomWord = getRandomWord(Math.floor(Math.random() * 8) + 3);
+    randomString += randomWord + ' ';
+  }
+  return randomString.trim(); // Remove the trailing space
+}
+
+// Generate a random string of 100 words
+const sampleText = generateRandomString(20);
+
+// let sampleText = "Type this text as fast as you can!";
 
 function startTypingTest() {
   document.getElementById('sampleText').innerText = sampleText;
