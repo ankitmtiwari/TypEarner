@@ -1,5 +1,6 @@
 import { configDotenv } from "dotenv";
 import { userModel } from "../models/user_model.js";
+import { paraTextModel } from "../models/paraText_model.js";
 import jwt from "jsonwebtoken";
 
 const generateAuthTokens = async (userId) => {
@@ -237,9 +238,26 @@ const typingTaskController = async (req, res) => {
   res.status(200).render("task/typing_task", {"paratext":"HII THIS IS PARATEXT FROM SERVER"});
 };
 
+async function getRandomParaText() {
+  try {
+    // Use aggregation to randomly get one document
+    const randomPara = await paraTextModel.aggregate([{ $sample: { size: 1 } }]);
+    
+    if (randomPara.length > 0) {
+      return randomPara[0]; // Since $sample returns an array, return the first (and only) item
+    } else {
+      return null; // In case there are no documents in the collection
+    }
+  } catch (error) {
+    console.error('Error fetching random paraText:', error);
+    throw error; // Handle or log the error as per your requirement
+  }
+}
+
 
 const demoTypingTaskController = async (req, res) => {
-  res.status(200).render("task/demo_task", {"paratext":"HII THIS IS DEMO RANDOM PARATEXT FROM SERVER"});
+  const doc=await getRandomParaText();
+  res.status(200).render("task/demo_task", {"paratext":doc.paraText});
 };
 
 export {

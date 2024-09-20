@@ -127,7 +127,7 @@
 
 
 // Example usage with your text
-let text = "<%= typeof paratext !== undefined? paratext: 'DEMO TEXT FROM UI' %>";
+let text = "<%= typeof paratext !== undefined && paratext != null? paratext: 'DEMO TEXT FROM UI' %>";
 let level = "{{ level|escapejs }}";
 console.log("the task is for : ", level)
 createImageWithText(text);
