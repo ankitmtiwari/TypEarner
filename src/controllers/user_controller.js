@@ -150,7 +150,7 @@ const doLoginUserController = async (req, res) => {
 
   //check if user exists with given username or email
   const existingUser = await userModel.findOne({
-    $or: [ { email }, { phoneNumber }],
+    $or: [{ email }, { phoneNumber }],
   });
 
   //error if no user found
@@ -226,38 +226,49 @@ const dashBoardController = async (req, res) => {
   res.status(200).render("task/dashboard");
 };
 
-const aboutPageController  = async (req, res) => {
+const aboutPageController = async (req, res) => {
   res.status(200).render("task/about");
 };
 
-const TNCPageController  = async (req, res) => {
+const TNCPageController = async (req, res) => {
   res.status(200).render("task/tnc");
 };
 
 const typingTaskController = async (req, res) => {
-  res.status(200).render("task/typing_task", {"paratext":"HII THIS IS PARATEXT FROM SERVER"});
+  res
+    .status(200)
+    .render("task/typing_task", {
+      paratext: "HII THIS IS PARATEXT FROM SERVER",
+    });
 };
 
-async function getRandomParaText() {
+async function getRandomParaText(category) {
+  console.log("came to get random quote for", category)
+  const match = {};
+  if (typeof category !== undefined && category != null) {
+    match.category = category;
+  }
   try {
     // Use aggregation to randomly get one document
-    const randomPara = await paraTextModel.aggregate([{ $sample: { size: 1 } }]);
-    
+    const randomPara = await paraTextModel.aggregate([
+      { $match: match },
+      { $sample: { size: 1 } },
+    ]);
+
     if (randomPara.length > 0) {
       return randomPara[0]; // Since $sample returns an array, return the first (and only) item
     } else {
       return null; // In case there are no documents in the collection
     }
   } catch (error) {
-    console.error('Error fetching random paraText:', error);
+    console.error("Error fetching random paraText:", error);
     throw error; // Handle or log the error as per your requirement
   }
 }
 
-
 const demoTypingTaskController = async (req, res) => {
-  const doc=await getRandomParaText();
-  res.status(200).render("task/demo_task", {"paratext":doc.paraText});
+  const doc = await getRandomParaText();
+  res.status(200).render("task/demo_task", { paratext: doc.paraText });
 };
 
 export {

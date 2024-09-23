@@ -4,7 +4,9 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { userRouters } from "./src/routes/user_routes.js";
 import { toolsRouter } from "./src/routes/tools_routes.js";
+import { taskRouter } from "./src/routes/task_routes.js";
 import { homePageController, aboutPageController, TNCPageController } from "./src/controllers/user_controller.js";
+import { inserTextController } from "./src/controllers/text_controller.js";
 
 const app = express();
 
@@ -36,10 +38,11 @@ app.use(express.static('public'))
 
 app.use('/api/v1', userRouters)
 app.use('/api/v1/tools', toolsRouter)
+app.use('/job', taskRouter)
 
 app.get('/', homePageController)
 app.get('/about', aboutPageController)
 app.get('/tnc', TNCPageController);
-
+app.get('/insertText', inserTextController);
 
 export { app };
