@@ -199,10 +199,14 @@ const doLoginUserController = async (req, res) => {
     secure: true,
   };
 
+  // Redirect the user to the originally requested page, or default to the dashboard
+  const redirectTo = req.session.returnTo || "/";
+  console.log("Return to", redirectTo)
+  delete req.session.returnTo; // Clear session once redirected
   return res
     .status(200)
     .cookie("accessToken", accessToken, options)
-    .redirect("/");
+    .redirect(redirectTo);
 };
 
 const homePageController = async (req, res) => {
@@ -235,15 +239,13 @@ const TNCPageController = async (req, res) => {
 };
 
 const typingTaskController = async (req, res) => {
-  res
-    .status(200)
-    .render("task/typing_task", {
-      paratext: "HII THIS IS PARATEXT FROM SERVER",
-    });
+  res.status(200).render("task/typing_task", {
+    paratext: "HII THIS IS PARATEXT FROM SERVER",
+  });
 };
 
 async function getRandomParaText(category) {
-  console.log("came to get random quote for", category)
+  console.log("came to get random quote for", category);
   const match = {};
   if (typeof category !== undefined && category != null) {
     match.category = category;

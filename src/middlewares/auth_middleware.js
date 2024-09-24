@@ -9,6 +9,7 @@ export const checkAuthMiddleware = async (req, res, next) => {
       req.cookies?.accessToken;
 
     if (!accessToken) {
+      req.session.returnTo=req.originalUrl;
       return res
         .status(401)
         .render('auth/login', { success: false, message: "Unauthorised request Please log in", data: {} });
@@ -28,6 +29,7 @@ export const checkAuthMiddleware = async (req, res, next) => {
 
     //error if there is no user with the access token uid
     if (!user) {
+      req.session.returnTo=req.originalUrl;
       return res
         .status(401)
         .render('auth/login',{ success: false, message: "Invalid Login Please Login again", date: {} });
