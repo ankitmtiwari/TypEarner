@@ -220,21 +220,60 @@ const doLogoutController = async (req, res) => {
   return res.status(200).clearCookie("accessToken", options).redirect("/");
 };
 
+// const homePageController = async (req, res) => {
+//   const accessToken = req.cookies.accessToken;
+//   if (!accessToken) {
+//     res.render("task/index", { success: true });
+//   } else {
+//     const currentUser = jwt.verify(
+//       accessToken,
+//       process.env.ACCESS_TOKEN_SECRET
+//     );
+//     const { _id, email, firstName, lastName } = currentUser;
+//     res.status(200).render("task/index", {
+//       success: true,
+//       data: { firstName: firstName, lastName: lastName, email: email },
+//     });
+//   }
+// };
 
 const homePageController = async (req, res) => {
-  const accessToken = req.cookies.accessToken;
-  if (!accessToken) {
-    res.render("task/index", { success: true });
-  } else {
-    const currentUser = jwt.verify(
-      accessToken,
-      process.env.ACCESS_TOKEN_SECRET
-    );
-    const { _id, email, firstName, lastName } = currentUser;
-    res.status(200).render("task/index", {
+  console.log("came to home page");
+  if (req.cookies.accessToken) {
+    console.log("Cookie meands access token found and user");
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken) {
+      res.render("task/index", { success: true });
+    } else {
+      try {
+        const currentUser = jwt.verify(
+          accessToken,
+          process.env.ACCESS_TOKEN_SECRET
+        );
+        const { _id, email, firstName, lastName } = currentUser;
+        return res.status(200).render("task/index", {
+          success: true,
+          data: { firstName: firstName, lastName: lastName, email: email },
+        });
+      } catch (error) {
+        return res
+          .status(301)
+          .send({
+            message: "Session Expired / Invalid Login session",
+            error: error,
+          });
+      }
+    }
+  } else if (req.user) {
+    console.log("with user", req.user.firstName);
+    const { _id, email, firstName, lastName } = req.user;
+    return res.status(200).render("task/index", {
       success: true,
       data: { firstName: firstName, lastName: lastName, email: email },
     });
+  } else {
+    console.log("User not found in request");
+    res.render("task/index", { success: true });
   }
 };
 
@@ -249,7 +288,6 @@ const aboutPageController = async (req, res) => {
 const TNCPageController = async (req, res) => {
   res.status(200).render("task/tnc");
 };
-
 
 export {
   registerUserController,
