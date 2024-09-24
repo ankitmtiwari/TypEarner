@@ -6,6 +6,7 @@ import {
   doRegisterUserController,
   loginUserController,
   doLoginUserController,
+  doLogoutController,
   dashBoardController,
   typingTaskController,
   demoTypingTaskController,
@@ -19,9 +20,9 @@ userRouters.route("/login").get(loginUserController);
 userRouters.route("/login").post(doLoginUserController);
 
 import { checkAuthMiddleware } from "../middlewares/auth_middleware.js";
+userRouters.route("/logout").get(checkAuthMiddleware, doLogoutController);
 userRouters.route("/dashboard").get(checkAuthMiddleware, dashBoardController);
 userRouters.route("/typing_task").get(checkAuthMiddleware, typingTaskController);
-
 userRouters.route("/demo_task").get(demoTypingTaskController);
 
 export { userRouters };

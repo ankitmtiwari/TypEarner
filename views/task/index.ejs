@@ -57,11 +57,22 @@
               </li>
             </ul>
             <div class="user_option">
-              <a href="/api/v1/login/">
+
+              <% if (typeof data !=='undefined' && typeof data.firstName !=='undefined') { %>
+                <a href="/api/v1/logout" class="btn-1">
+                  Log Out
+                </a>
+              <% } else { %>
+                  <a href="/api/v1/login" class="btn-1">
+                    Login
+                  </a>
+              <% }%>
+
+              <!-- <a href="/api/v1/login/">
                 <span>
                   Login
                 </span>
-              </a>
+              </a> -->
               <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
               </form>

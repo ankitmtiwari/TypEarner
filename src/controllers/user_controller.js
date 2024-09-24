@@ -201,7 +201,7 @@ const doLoginUserController = async (req, res) => {
 
   // Redirect the user to the originally requested page, or default to the dashboard
   const redirectTo = req.session.returnTo || "/";
-  console.log("Return to", redirectTo)
+  console.log("Return to", redirectTo);
   delete req.session.returnTo; // Clear session once redirected
   return res
     .status(200)
@@ -209,6 +209,15 @@ const doLoginUserController = async (req, res) => {
     .redirect(redirectTo);
 };
 
+const doLogoutController = async (req, res) => {
+  //cofigure options for storing token in browser cookier of the user
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+  delete req.session.returnTo; // Clear session once logged out
+  return res.status(200).clearCookie("accessToken", options).redirect("/");
+};
 const homePageController = async (req, res) => {
   const accessToken = req.cookies.accessToken;
   if (!accessToken) {
@@ -278,6 +287,7 @@ export {
   doRegisterUserController,
   loginUserController,
   doLoginUserController,
+  doLogoutController,
   homePageController,
   aboutPageController,
   TNCPageController,
