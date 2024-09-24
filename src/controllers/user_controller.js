@@ -209,6 +209,7 @@ const doLoginUserController = async (req, res) => {
     .redirect(redirectTo);
 };
 
+//do Log OUt Controller
 const doLogoutController = async (req, res) => {
   //cofigure options for storing token in browser cookier of the user
   const options = {
@@ -218,6 +219,8 @@ const doLogoutController = async (req, res) => {
   delete req.session.returnTo; // Clear session once logged out
   return res.status(200).clearCookie("accessToken", options).redirect("/");
 };
+
+
 const homePageController = async (req, res) => {
   const accessToken = req.cookies.accessToken;
   if (!accessToken) {
@@ -247,40 +250,6 @@ const TNCPageController = async (req, res) => {
   res.status(200).render("task/tnc");
 };
 
-const typingTaskController = async (req, res) => {
-  res.status(200).render("task/typing_task", {
-    paratext: "HII THIS IS PARATEXT FROM SERVER",
-  });
-};
-
-async function getRandomParaText(category) {
-  console.log("came to get random quote for", category);
-  const match = {};
-  if (typeof category !== undefined && category != null) {
-    match.category = category;
-  }
-  try {
-    // Use aggregation to randomly get one document
-    const randomPara = await paraTextModel.aggregate([
-      { $match: match },
-      { $sample: { size: 1 } },
-    ]);
-
-    if (randomPara.length > 0) {
-      return randomPara[0]; // Since $sample returns an array, return the first (and only) item
-    } else {
-      return null; // In case there are no documents in the collection
-    }
-  } catch (error) {
-    console.error("Error fetching random paraText:", error);
-    throw error; // Handle or log the error as per your requirement
-  }
-}
-
-const demoTypingTaskController = async (req, res) => {
-  const doc = await getRandomParaText();
-  res.status(200).render("task/demo_task", { paratext: doc.paraText });
-};
 
 export {
   registerUserController,
@@ -292,6 +261,4 @@ export {
   aboutPageController,
   TNCPageController,
   dashBoardController,
-  typingTaskController,
-  demoTypingTaskController,
 };

@@ -26,18 +26,26 @@ async function getRandomParaText(category) {
 
 const typingTaskController = async (req, res) => {
   const { level } = req.params;
-  try {
-    const doc = await getRandomParaText(level);
-    if (doc != null) {
-      return res.status(200).render("task/typing_task", {
-        paratext: doc.paraText,
-      });
-    }
-    else{
+  if (
+    level === "beginer" ||
+    level === "intermidiate" ||
+    level === "advance" ||
+    level === "cool"
+  ) {
+    try {
+      const doc = await getRandomParaText(level);
+      if (doc != null) {
+        return res.status(200).render("task/typing_task", {
+          paratext: doc.paraText,
+        });
+      } else {
         return res.status(404).send({ error: "No matcging records" });
+      }
+    } catch (error) {
+      return res.status(500).send({ error: error });
     }
-  } catch (error) {
-    return res.status(500).send({ error: error });
+  } else {
+    return res.status(404).render("task/index");
   }
 };
 
