@@ -16,7 +16,7 @@ import {
 userRouters.route("/register").get(registerUserController);
 userRouters.route("/register").post(doRegisterUserController);
 
-//do login
+//do login for existing user
 userRouters.route("/login").get(loginUserController);
 userRouters.route("/login").post(doLoginUserController);
 

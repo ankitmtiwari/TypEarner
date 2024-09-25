@@ -2,12 +2,14 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+
 import { userRouters } from "./src/routes/user_routes.js";
 import { toolsRouter } from "./src/routes/tools_routes.js";
 import { taskRouter } from "./src/routes/task_routes.js";
-import { homePageController, aboutPageController, TNCPageController } from "./src/controllers/user_controller.js";
+import { staticRouter } from "./src/routes/static_routes.js";
+
+import { homePageController } from "./src/controllers/user_controller.js";
 import { inserTextController } from "./src/controllers/text_controller.js";
-import { checkAuthMiddleware } from "./src/middlewares/auth_middleware.js";
 
 const app = express();
 
@@ -37,13 +39,17 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.use(express.static('public'))
 
-app.use('/api/v1', userRouters)
-app.use('/api/v1/tools', toolsRouter)
-app.use('/job', taskRouter)
-
+//home page of the site
 app.get('/',homePageController)
-app.get('/about', aboutPageController)
-app.get('/tnc', TNCPageController);
+//all user auth related routed
+app.use('/api/v1', userRouters)
+//all tools router
+app.use('/api/v1/tools', toolsRouter)
+//all task related routes like sample task, or actual job task
+app.use('/job', taskRouter)
+//all static pages routes
+app.use('/static', staticRouter)
+//for temporary usage of putting data in database
 app.get('/insertText', inserTextController);
 
 export { app };

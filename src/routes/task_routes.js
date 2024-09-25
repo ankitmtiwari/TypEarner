@@ -5,9 +5,9 @@ import { homePageController } from "../controllers/user_controller.js";
 
 const taskRouter=Router()
 
-taskRouter.route('/').get(homePageController)
+taskRouter.route('/').get(homePageController) //sending at home page if nothing to show at this route
 taskRouter.route('/sample').get(demoTypingTaskController);
-taskRouter.route('/task').get(checkAuthMiddleware, typingTaskController);
+taskRouter.route('/task').get(checkAuthMiddleware, homePageController);  //sending at home page as nothing to show at this route
 taskRouter.route('/task/:level').get(checkAuthMiddleware, typingTaskController);
 
 export {taskRouter};

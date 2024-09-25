@@ -1,6 +1,5 @@
 import { configDotenv } from "dotenv";
 import { userModel } from "../models/user_model.js";
-import { paraTextModel } from "../models/paraText_model.js";
 import jwt from "jsonwebtoken";
 
 const generateAuthTokens = async (userId) => {
@@ -287,13 +286,7 @@ const dashBoardController = async (req, res) => {
   res.status(200).render("task/dashboard");
 };
 
-const aboutPageController = async (req, res) => {
-  res.status(200).render("task/about");
-};
 
-const TNCPageController = async (req, res) => {
-  res.status(200).render("task/tnc");
-};
 
 export {
   registerUserController,
@@ -302,7 +295,5 @@ export {
   doLoginUserController,
   doLogoutController,
   homePageController,
-  aboutPageController,
-  TNCPageController,
   dashBoardController,
 };
