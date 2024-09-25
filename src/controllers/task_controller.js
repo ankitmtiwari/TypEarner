@@ -50,8 +50,30 @@ const typingTaskController = async (req, res) => {
 };
 
 const demoTypingTaskController = async (req, res) => {
-  const doc = await getRandomParaText();
-  res.status(200).render("task/demo_task", { paratext: doc.paraText });
+
+  const { level } = req.params;
+  if (
+    level === "beginer" ||
+    level === "intermidiate" ||
+    level === "advance" ||
+    level === "cool"
+  ) {
+    try {
+      const doc = await getRandomParaText(level);
+      if (doc != null) {
+        return res.status(200).render("task/typing_task", {
+          paratext: doc.paraText,
+        });
+      } else {
+        return res.status(404).send({ error: "No matching records" });
+      }
+    } catch (error) {
+      return res.status(500).send({ error: error });
+    }
+  } else {
+    const doc = await getRandomParaText();
+    return res.status(200).render("task/demo_task", { paratext: doc.paraText })
+  }
 };
 
 export { typingTaskController, demoTypingTaskController };
