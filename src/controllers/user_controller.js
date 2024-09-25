@@ -240,7 +240,12 @@ const homePageController = async (req, res) => {
   console.log("came to home page");
   //If user is logged in then access_token cookie will be there
   if (req.cookies.accessToken) {
-    console.log("Cookie meands access token found and user");
+    //cofigure options for storing token in browser cookier of the user
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+    console.log("Cookie means access token found and user");
     const accessToken = req.cookies.accessToken;
     try {
       //if access token is available then verify that if its expired or not
@@ -250,10 +255,13 @@ const homePageController = async (req, res) => {
       );
       //if no curreny User found then force to login again
       if (!currentUser) {
-        return res.status(400).render("auth/login", {
-          success: false,
-          message: "Invalid Session. Please Login again",
-        });
+        return res
+          .status(400)
+          .clearCookie("accessToken", options)
+          .render("auth/login", {
+            success: false,
+            message: "Invalid Session. Please Login again",
+          });
       }
       //if token is verified then
       const { _id, email, firstName, lastName } = currentUser;
@@ -263,17 +271,23 @@ const homePageController = async (req, res) => {
       });
     } catch (error) {
       if (error.name === "TokenExpiredError") {
-        return res.status(401).render("auth/login", {
-          success: false,
-          message: "Session expired. Please log in again.",
-          data: {},
-        });
+        return res
+          .status(401)
+          .clearCookie("accessToken", options)
+          .render("auth/login", {
+            success: false,
+            message: "Session expired. Please log in again.",
+            data: {},
+          });
       } else {
-        return res.status(401).send({
-          success: false,
-          message: error?.message || "Invalid access token",
-          data: error,
-        });
+        return res
+          .status(401)
+          .clearCookie("accessToken", options)
+          .send({
+            success: false,
+            message: error?.message || "Invalid access token",
+            data: error,
+          });
       }
     }
   } else {
@@ -285,8 +299,6 @@ const homePageController = async (req, res) => {
 const dashBoardController = async (req, res) => {
   res.status(200).render("task/dashboard");
 };
-
-
 
 export {
   registerUserController,
