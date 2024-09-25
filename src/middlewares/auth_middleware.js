@@ -19,7 +19,8 @@ export const checkAuthMiddleware = async (req, res, next) => {
 
     const decodedAccessToken = jwt.verify(
       accessToken,
-      process.env.ACCESS_TOKEN_SECRET
+      process.env.ACCESS_TOKEN_SECRET,
+  
     );
 
     //find the user from the uid of access token
@@ -49,10 +50,23 @@ export const checkAuthMiddleware = async (req, res, next) => {
     // console.log("Authorization Done");
     next();
   } catch (error) {
-    return res.status(401).send({
-      success: false,
-      message: error?.message || "Invalid Access Token",
-      data: error,
-    });
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).render('auth/login', {
+        success: false,
+        message: "Session expired. Please log in again.",
+        data: {}
+      });
+    } else {
+      return res.status(401).send({
+        success: false,
+        message: error?.message || "Invalid access token",
+        data: error,
+      });
+    }
+    // return res.status(401).send({
+    //   success: false,
+    //   message: error?.message || "Invalid Access Token",
+    //   data: error,
+    // });
   }
 };

@@ -239,38 +239,44 @@ const doLogoutController = async (req, res) => {
 
 const homePageController = async (req, res) => {
   console.log("came to home page");
+  //If user is logged in then access_token cookie will be there
   if (req.cookies.accessToken) {
     console.log("Cookie meands access token found and user");
     const accessToken = req.cookies.accessToken;
-    if (!accessToken) {
-      res.render("task/index", { success: true });
-    } else {
-      try {
-        const currentUser = jwt.verify(
-          accessToken,
-          process.env.ACCESS_TOKEN_SECRET
-        );
-        const { _id, email, firstName, lastName } = currentUser;
-        return res.status(200).render("task/index", {
-          success: true,
-          data: { firstName: firstName, lastName: lastName, email: email },
+    try {
+      //if access token is available then verify that if its expired or not
+      const currentUser = jwt.verify(
+        accessToken,
+        process.env.ACCESS_TOKEN_SECRET
+      );
+      //if no curreny User found then force to login again
+      if (!currentUser) {
+        return res.status(400).render("auth/login", {
+          success: false,
+          message: "Invalid Session. Please Login again",
         });
-      } catch (error) {
-        return res
-          .status(301)
-          .send({
-            message: "Session Expired / Invalid Login session",
-            error: error,
-          });
+      }
+      //if token is verified then
+      const { _id, email, firstName, lastName } = currentUser;
+      return res.status(200).render("task/index", {
+        success: true,
+        data: { firstName: firstName, lastName: lastName, email: email },
+      });
+    } catch (error) {
+      if (error.name === "TokenExpiredError") {
+        return res.status(401).render("auth/login", {
+          success: false,
+          message: "Session expired. Please log in again.",
+          data: {},
+        });
+      } else {
+        return res.status(401).send({
+          success: false,
+          message: error?.message || "Invalid access token",
+          data: error,
+        });
       }
     }
-  } else if (req.user) {
-    console.log("with user", req.user.firstName);
-    const { _id, email, firstName, lastName } = req.user;
-    return res.status(200).render("task/index", {
-      success: true,
-      data: { firstName: firstName, lastName: lastName, email: email },
-    });
   } else {
     console.log("User not found in request");
     res.render("task/index", { success: true });
