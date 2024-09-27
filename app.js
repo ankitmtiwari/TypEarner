@@ -41,15 +41,26 @@ app.use(express.static('public'))
 
 //home page of the site
 app.get('/',homePageController)
+
 //all user auth related routed
 app.use('/api/v1', userRouters)
+
 //all tools router
 app.use('/api/v1/tools', toolsRouter)
+
 //all task related routes like sample task, or actual job task
 app.use('/job', taskRouter)
+
 //all static pages routes
 app.use('/static', staticRouter)
+
 //for temporary usage of putting data in database
 app.get('/insertText', inserTextController);
+
+//when unKnown Page request then
+app.use((req, res, next) => {
+  res.status(404).render("task/not_found");
+});
+
 
 export { app };

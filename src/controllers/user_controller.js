@@ -166,7 +166,7 @@ const doLoginUserController = async (req, res) => {
 
   //error if password is invalid
   if (!isPasswordValid) {
-    return res.status(401).render({
+    return res.status(401).render("auth/login", {
       success: false,
       message: "Invalid Credentials",
       data: { email: email },
@@ -200,7 +200,7 @@ const doLoginUserController = async (req, res) => {
 
   // Redirect the user to the originally requested page, or default to the dashboard
   const redirectTo = req.session.returnTo || "/";
-  console.log("Return to", redirectTo);
+  console.log("Login Done -> Return to", redirectTo);
   delete req.session.returnTo; // Clear session once redirected
   return res
     .status(200)

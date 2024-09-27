@@ -9,7 +9,7 @@ taskRouter.route('/').get(homePageController) //sending at home page if nothing 
 taskRouter.route('/sample').get(demoTypingTaskController);
 taskRouter.route('/sample/:level').get(demoTypingTaskController);
 //protected routes
-taskRouter.route('/task').get(checkAuthMiddleware, homePageController);  //sending at home page as nothing to show at this route
+// taskRouter.route('/task').get(checkAuthMiddleware, homePageController);  //sending at home page as nothing to show at this route
 taskRouter.route('/task/:level').get(checkAuthMiddleware, typingTaskController);
 
 export {taskRouter};

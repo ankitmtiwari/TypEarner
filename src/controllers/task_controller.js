@@ -25,32 +25,48 @@ async function getRandomParaText(category) {
 }
 
 const typingTaskController = async (req, res) => {
-  const { level } = req.params;
-  if (
-    level === "beginer" ||
-    level === "intermidiate" ||
-    level === "advance" ||
-    level === "cool"
-  ) {
-    try {
-      const doc = await getRandomParaText(level);
-      if (doc != null) {
-        return res.status(200).render("task/typing_task", {
-          paratext: doc.paraText,
-        });
-      } else {
-        return res.status(404).send({ error: "No matcging records" });
+  if (!req.user) {
+    const { level } = req.params;
+    if (
+      level === "beginer" ||
+      level === "intermidiate" ||
+      level === "advance" ||
+      level === "cool"
+    ) {
+      try {
+        const doc = await getRandomParaText(level);
+        if (doc != null) {
+          return res.status(200).render("task/typing_task", {
+            paratext: doc.paraText,
+          });
+        } else {
+          return res.status(404).send({ error: "No matcging records" });
+        }
+      } catch (error) {
+        return res.status(500).send({ error: error });
       }
-    } catch (error) {
-      return res.status(500).send({ error: error });
+    } else {
+      return res.status(404).render("task/index");
     }
   } else {
-    return res.status(404).render("task/index");
+    //cofigure options for storing token in browser cookier of the user
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+    req.session.returnTo = req.originalUrl;
+    return res
+      .status(301)
+      .clearCookie("accessToken", options)
+      .render("auth/login", {
+        success: false,
+        message: "Unauthorised request Please log in Suspecius Detected",
+        data:{}
+      });
   }
 };
 
 const demoTypingTaskController = async (req, res) => {
-
   const { level } = req.params;
   if (
     level === "beginer" ||
@@ -72,8 +88,9 @@ const demoTypingTaskController = async (req, res) => {
     }
   } else {
     const doc = await getRandomParaText();
-    return res.status(200).render("task/demo_task", { paratext: doc.paraText })
+    return res.status(200).render("task/demo_task", { paratext: doc.paraText });
   }
 };
 
+const taskSubmissionController = async (req, res) => {};
 export { typingTaskController, demoTypingTaskController };
