@@ -61,7 +61,7 @@ const typingTaskController = async (req, res) => {
       .render("auth/login", {
         success: false,
         message: "Unauthorised request Please log in Suspecius Detected",
-        data:{}
+        data: {},
       });
   }
 };
@@ -92,5 +92,11 @@ const demoTypingTaskController = async (req, res) => {
   }
 };
 
-const taskSubmissionController = async (req, res) => {};
-export { typingTaskController, demoTypingTaskController };
+const taskSubmissionController = async (req, res) => {
+  console.log("Came to submit task");
+};
+export {
+  typingTaskController,
+  demoTypingTaskController,
+  taskSubmissionController,
+};
